@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -68,11 +69,10 @@ public class BeerController {
     }
 
     @DeleteMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public String deleteBeer(@PathVariable String id) {
+    public ResponseEntity<String> deleteBeer(@PathVariable String id) {
 
         Long serviceResult = beerService.delete(Integer.parseInt(id));
-        return serviceResult + " row(s) deleted";
+        return new ResponseEntity<>(serviceResult + " row(s) deleted", HttpStatus.NO_CONTENT);
     }
 }
