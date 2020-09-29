@@ -2,40 +2,76 @@ package com.beerhouse.adapters.respository;
 
 import com.beerhouse.domain.model.Beer;
 import com.beerhouse.domain.ports.BeerRepositoryPort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class BeerRepository implements BeerRepositoryPort {
 
+    @Autowired
     BeerJpaRepository beerRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public List<Beer> retrieveMany() {
-        return beerRepository.findAll();
+        List<BeerEntity> results = beerRepository.findAll();
+        if(results.isEmpty()){
+            return null;
+        }
+
+        return modelMapper.map(results,new TypeToken<List<Beer>>(){}.getType());
     }
 
     @Override
     public Beer retrieveOne(int id) {
-        return beerRepository.findOne(id);
+        Optional<BeerEntity> results = beerRepository.findById(id);
+        if(!results.isPresent()){
+            return null;
+        }
+        return modelMapper.map(results.get(),Beer.class);
     }
 
     @Override
-    public void create(Beer beer) {
-        beerRepository.save(beer);
+    public Beer create(Beer beer) {
+        BeerEntity beerRecord = modelMapper.map(beer, BeerEntity.class);
+        BeerEntity results = beerRepository.save(beerRecord);
+
+        return modelMapper.map(results,Beer.class);
     }
 
     @Override
-    public void update(Beer beer) {
-        beerRepository.save(beer);
+    public Beer update(Beer replacementBeer) {
+        BeerEntity replacementRecord = modelMapper.map(replacementBeer,BeerEntity.class);
+
+        BeerEntity results = beerRepository.save(replacementRecord);
+
+        return modelMapper.map(results,Beer.class);
     }
 
     @Override
-    public void alter(Beer beer) {
-        beerRepository.save(beer);
+    public Beer alter(Beer replacementBeer) {
+        BeerEntity replacementRecord = modelMapper.map(replacementBeer,BeerEntity.class);
+
+        BeerEntity results = beerRepository.save(replacementRecord);
+
+        return modelMapper.map(results,Beer.class);
     }
 
     @Override
-    public void delete(int id) {
-        beerRepository.delete(id);
+    public Long delete(int id) {
+
+        return beerRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean nameExists(String name) {
+        return beerRepository.existsBeerEntityByName(name);
     }
 }

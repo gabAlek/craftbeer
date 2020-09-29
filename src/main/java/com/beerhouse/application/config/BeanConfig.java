@@ -17,4 +17,5 @@ public class BeanConfig {
 
         return modelMapper;
     }
+
 }

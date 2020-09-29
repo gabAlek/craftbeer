@@ -1,4 +1,4 @@
-package com.beerhouse.domain.services;
+package com.beerhouse.domain.model.exception;
 
 public class BeerNotFoundException extends RuntimeException {
     public BeerNotFoundException(Integer id) {

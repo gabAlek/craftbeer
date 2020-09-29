@@ -9,11 +9,13 @@ public interface BeerRepositoryPort {
 
     Beer retrieveOne(int id);
 
-    void create(Beer beer);
+    Beer create(Beer beer);
 
-    void update(Beer beer);
+    Beer update(Beer beer);
 
-    void alter(Beer beer);
+    Beer alter(Beer beer);
 
-    void delete(int id);
+    Long delete(int id);
+
+    boolean nameExists(String name);
 }

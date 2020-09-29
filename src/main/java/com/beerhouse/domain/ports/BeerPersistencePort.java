@@ -2,6 +2,7 @@ package com.beerhouse.domain.ports;
 
 import com.beerhouse.domain.model.Beer;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface BeerPersistencePort {
@@ -11,8 +12,7 @@ public interface BeerPersistencePort {
     Beer retrieveOne(int id);
 
     Beer create(Beer beer);
-    Beer update(Beer beer);
-    Beer alter(Beer beer);
-
-    Beer delete(int id);
+    Beer update(int id,Beer beer);
+    Beer alter(int id, LinkedHashMap<String,Object> fields);
+    Long delete(int id);
 }

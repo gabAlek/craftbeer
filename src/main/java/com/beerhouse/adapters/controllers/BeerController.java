@@ -9,12 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/beers",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/beers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BeerController {
 
     @Autowired
@@ -25,39 +24,55 @@ public class BeerController {
 
     @GetMapping
     public List<Beer> retrieveAllBeers() {
+
         return beerService.retrieveMany();
     }
 
     @GetMapping(path = "/{id}")
+    @ResponseBody
     public Beer retrieveBeer(@PathVariable String id) {
         int parsedId = Integer.parseInt(id);
         return beerService.retrieveOne(parsedId);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public Beer createBeer(@Valid @RequestBody BeerRequest body) {
         return beerService.create(modelMapper.map(body, Beer.class));
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public Beer updateBeer(@PathVariable String id,
                            @Valid @RequestBody BeerRequest body) {
-        return beerService.update(modelMapper.map(body, Beer.class));
+
+        int requestedId = Integer.parseInt(id);
+
+        if(body.getId() != requestedId)
+            throw new IllegalArgumentException(
+                    "The id informed in the path is different from the one of the resource." +
+                            " Path id: " + id +
+                            ", resource id:" + body.getId());
+
+        Beer replacementBeer = modelMapper.map(body,Beer.class);
+
+        return beerService.update(requestedId,replacementBeer);
     }
 
-    @PatchMapping(path = "/{id}")
+    @PatchMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public Beer alterBeer(@PathVariable String id,
-                                            @RequestBody Object fields) {
-        Beer beer = Beer.builder().build();
-        modelMapper.map(fields, beer);
-
-        return beerService.alter(beer);
+                          @RequestBody LinkedHashMap<String,Object> fields) {
+        return beerService.alter(Integer.parseInt(id),fields);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Beer deleteBeer(@PathVariable String id) {
-        return beerService.delete(Integer.parseInt(id));
+    @ResponseBody
+    public String deleteBeer(@PathVariable String id) {
+
+        Long serviceResult = beerService.delete(Integer.parseInt(id));
+        return serviceResult + " row(s) deleted";
     }
 }

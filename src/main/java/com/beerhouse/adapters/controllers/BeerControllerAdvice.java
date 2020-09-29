@@ -1,7 +1,8 @@
 package com.beerhouse.adapters.controllers;
 
-import com.beerhouse.domain.services.BeerNotFoundException;
-import com.beerhouse.domain.services.NoBeersWereFoundException;
+import com.beerhouse.domain.model.exception.BeerAlreadyExistsException;
+import com.beerhouse.domain.model.exception.BeerNotFoundException;
+import com.beerhouse.domain.model.exception.NoBeersFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,9 +19,16 @@ class BeerControllerAdvice {
     }
 
     @ResponseBody
-    @ExceptionHandler(BeerNotFoundException.class)
+    @ExceptionHandler(NoBeersFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String noBeersWereFound(NoBeersWereFoundException ex) {
+    String noBeersWereFound(NoBeersFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BeerAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String beerAlreadyExists(BeerAlreadyExistsException ex) {
         return ex.getMessage();
     }
 }
