@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "e87dca54-bfe0-493a-8ede-dc8f1d0a0e62",
+		"name": "craft-beer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST-BEER-VARIATION-1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"name\": \"Eisenbahn\",\n    \"ingredients\": \"Água, lúpulo\",\n    \"alcoholContent\": \"4.5%\",\n    \"price\": 2.50,\n    \"category\": \"Lagger\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST-BEER-VARIATION-2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"name\": \"Brahma\",\n    \"ingredients\": \"Água, lúpulo, milho\",\n    \"alcoholContent\": \"3.0%\",\n    \"price\": 3.50,\n    \"category\": \"Pilsen\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH-BEER-VARIATION1",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Colorado\",\n    \"category\": \"IPA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers/2",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH-BEER-VARIATION2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 10.50,\n    \"ingredients\": \"Água\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers/2",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-BEER-ALL-BEERS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-BEER-BY-ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers/100",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers",
+						"100"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE-BEER-BY-ID",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT-BEER-BY-ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"name\": \"Heineken\",\n    \"ingredients\": \"Água, lúpulo\",\n    \"alcoholContent\": \"4.4%\",\n    \"price\": 7.50,\n    \"category\": \"Lager\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/beerhouse/beers/2",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"beerhouse",
+						"beers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
